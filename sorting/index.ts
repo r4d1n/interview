@@ -52,3 +52,45 @@ export function mergeSort(array: number[]) {
   }
   return array;
 }
+
+export function quickSort(array: number[]) {
+  return innerQuickSort(array, 0, array.length - 1);
+
+  function innerQuickSort(array: number[], left: number, right: number) {
+    if (left >= right) {
+      return;
+    }
+    const pivot = array[Math.floor(left + (right - left) / 2)];
+    const index = partition(array, left, right, pivot);
+
+    innerQuickSort(array, left, index - 1);
+    innerQuickSort(array, index, right);
+
+    return array;
+  }
+
+  function partition(
+    array: number[],
+    left: number,
+    right: number,
+    pivot: number
+  ) {
+    while (left <= right) {
+      while (array[left] < pivot) {
+        left++;
+      }
+      while (array[right] > pivot) {
+        right--;
+      }
+      if (left <= right) {
+        // swap
+        let tmp = array[left];
+        array[left] = array[right];
+        array[right] = tmp;
+        left++;
+        right--;
+      }
+    }
+    return left; // partition point
+  }
+}
